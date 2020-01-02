@@ -1,4 +1,4 @@
-# Fitting with MLP using-PyTorch
+# Fitting with MLP using PyTorch
 The goal of this repository is to share programs that fit some kinds of curves by high configurable MLP (Multi-Layer Perceptron) written in Python 3 using PyTorch.
 
 ## One variable function fitting

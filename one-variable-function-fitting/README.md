@@ -123,7 +123,7 @@ where:
   - Tanh()
   - Tanhshrink()
   - Threshold() \
-  \The default is **ReLU()** (applied to one only hidden layer; if number of layers are > 1, this argument becomes mandatory).
+  The default is **ReLU()** (applied to one only hidden layer; if number of layers are > 1, this argument becomes mandatory).
 - **--optimizer** is the constructor call of the algorithm used by the training process. You can pass also named arguments between round brackets; please see [PyTorch optimizer algorithm reference](https://pytorch.org/docs/stable/optim.html#algorithms) for details about constructor named parameters and examples at the end of this section.\
   Available algorithm constructors are:
   - Adadelta()
