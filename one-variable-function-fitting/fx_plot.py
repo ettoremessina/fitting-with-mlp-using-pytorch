@@ -3,13 +3,13 @@ import csv
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='fx_plot.py shows two overlapped x/y scatter graphs: the blue one is the train dataset, the red one is the predicted one')
+    parser = argparse.ArgumentParser(description='fx_plot.py shows two overlapped x/y scatter graphs: the blue one is the dataset, the red one is the prediction')
 
-    parser.add_argument('--trainds',
+    parser.add_argument('--ds',
                         type=str,
-                        dest='train_dataset_filename',
+                        dest='dataset_filename',
                         required=True,
-                        help='train dataset file (csv format)')
+                        help='dataset file (csv format)')
 
     parser.add_argument('--predicted',
                         type=str,
@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    with open(args.train_dataset_filename) as csv_file:
+    with open(args.dataset_filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             plt.scatter(float(row[0]), float(row[1]), color='blue', s=1, marker='.')

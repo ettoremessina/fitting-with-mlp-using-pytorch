@@ -12,4 +12,4 @@ python ../fx_fit.py --trainds datasets/example8_train.csv --modelout models/exam
 python ../fx_gen.py --dsout datasets/example8_test.csv  --fx "$FX" --rbegin $RB --rend $RE --rstep 0.0475
 python ../fx_predict.py --model models/example8.pth --testds datasets/example8_test.csv --predictedout predictions/example8_pred.csv
 
-python ../fx_plot.py --trainds datasets/example8_train.csv --predicted predictions/example8_pred.csv
+python ../fx_plot.py --ds datasets/example8_test.csv --predicted predictions/example8_pred.csv
