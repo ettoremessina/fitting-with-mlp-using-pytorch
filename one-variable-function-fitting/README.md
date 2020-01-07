@@ -9,7 +9,7 @@ It contains four python programs:
  - **fx_plot.py** shows two overlapped x/y scatter graphs: the blue one is the train dataset, the red one is the predicted one.
 
 ### Predefined examples of usage of the four command in cascade
-In the subfolder **examples** there are nine bash scripts to fit nine different one-variable functions; each script executes the four programs in cascade in order to reach and show the goal.
+In the subfolder **examples** there are nine shell scripts to fit nine different one-variable functions; each script executes the four programs in cascade in order to reach and show the goal.
 
 ```bash
 $ cd one-variable-function-fitting/examples
@@ -35,15 +35,24 @@ $ python fx_gen.py --help
 
 and you get
 ```
-fx_gen.py generates a synthetic dataset file calling a one-variable real function in an interval
+usage: fx_gen.py [-h]
+                 --dsout DS_OUTPUT_FILENAME
+                 --fx FUNC_X_BODY
+                 [--rbegin RANGE_BEGIN]
+                 [--rend RANGE_END]
+                 [--rstep RANGE_STEP]
+
+fx_gen.py generates a synthetic dataset file calling a one-variable real
+function in an interval
 
 optional arguments:
-  -h, --help                  show this help message and exit
-  --dsout DS_OUTPUT_FILENAME  dataset output file (csv format)
-  --fx FUNC_X_BODY            f(x) body (body lamba format)
-  --rbegin RANGE_BEGIN        begin range (default:-5.0)
-  --rend RANGE_END            end range (default:+5.0)
-  --rstep RANGE_STEP          step range (default: 0.01)
+  -h, --help            show this help message and exit
+  --dsout DS_OUTPUT_FILENAME
+                        dataset output file (csv format)
+  --fx FUNC_X_BODY      f(x) body (lamba format)
+  --rbegin RANGE_BEGIN  begin range (default:-5.0)
+  --rend RANGE_END      end range (default:+5.0)
+  --rstep RANGE_STEP    step range (default: 0.01)
 ```
 
 where:
