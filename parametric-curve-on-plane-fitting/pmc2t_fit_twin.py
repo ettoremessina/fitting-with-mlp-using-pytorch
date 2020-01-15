@@ -66,7 +66,7 @@ def build_loss():
     return eval(exp_loss)(None)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_fit_1.py fits a implemented in PyTorch')
+    parser = argparse.ArgumentParser(description='pmc2t_fit_twin.py fits a parametric curve on plan dataset using two configurable twin multilayer perceptrons each of them with only one output neuron')
 
     parser.add_argument('--trainds',
                         type=str,
@@ -160,7 +160,7 @@ if __name__ == "__main__":
 
     start_time = time.time()
     for epoch in range(args.epochs):
-        print('Epoch {}/{}'.format(epoch+1, args.epochs))
+        print('MLP #1, Epoch {}/{}'.format(epoch+1, args.epochs))
 
         print('[', end = '')
         for batch_num, batch_data in enumerate(dataloader):
@@ -175,7 +175,7 @@ if __name__ == "__main__":
         print (']/{} - loss: {}'.format(batch_num, loss_x.item()))
 
     for epoch in range(args.epochs):
-        print('Epoch {}/{}'.format(epoch+1, args.epochs))
+        print('MLP #2, Epoch {}/{}'.format(epoch+1, args.epochs))
 
         print('[', end = '')
         for batch_num, batch_data in enumerate(dataloader):

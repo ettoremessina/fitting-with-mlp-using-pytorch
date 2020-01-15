@@ -65,7 +65,7 @@ def build_loss():
     return eval(exp_loss)(None)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_fit_1.py fits a implemented in PyTorch')
+    parser = argparse.ArgumentParser(description='pmc2t_fit.py fits a parametric curve on plan dataset using a configurable multilayer perceptron with two output neurons')
 
     parser.add_argument('--trainds',
                         type=str,

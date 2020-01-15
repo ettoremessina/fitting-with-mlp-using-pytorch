@@ -3,7 +3,7 @@ import csv
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_plot.py shows two overlapped x/y scatter graphs: the blue one is the dataset, the red one is the predicted one')
+    parser = argparse.ArgumentParser(description='pmc2t_plot.py shows two overlapped x/y scatter graphs: the blue one is the dataset, the red one is the prediction')
 
     parser.add_argument('--ds',
                         type=str,

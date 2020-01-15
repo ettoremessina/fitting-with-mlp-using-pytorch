@@ -63,7 +63,7 @@ def build_loss():
     return eval(exp_loss)(None)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='fx_fit.py fits a one-variable function in an interval using a configurable multilayer perceptron network implemented in PyTorch')
+    parser = argparse.ArgumentParser(description='fx_fit.py fits a one-variable function dataset using a configurable multilayer perceptron')
 
     parser.add_argument('--trainds',
                         type=str,

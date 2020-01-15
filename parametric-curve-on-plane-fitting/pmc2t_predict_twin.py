@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_fit_1.py makes a prediction on a test dataset of a ...modeled with a pretrained multilayer perceptron network')
+    parser = argparse.ArgumentParser(description='pmc2t_fit_twin.py makes prediction of the couple of values of a parametric curve on plan modeled with two pretrained twin multilayer perceptrons each of them with only one output neuron')
 
     parser.add_argument('--model',
                         type=str,
@@ -14,11 +14,11 @@ if __name__ == "__main__":
                         required=True,
                         help='model path')
 
-    parser.add_argument('--testds',
+    parser.add_argument('--ds',
                         type=str,
-                        dest='test_dataset_filename',
+                        dest='dataset_filename',
                         required=True,
-                        help='test dataset file (csv format)')
+                        help='dataset file (csv format); only t-values are used')
 
     parser.add_argument('--predictedout',
                         type=str,
@@ -35,15 +35,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    t_test = []
-    x_test = []
-    y_test = []
-    with open(args.test_dataset_filename) as csv_file:
+    t_values = []
+    with open(args.dataset_filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-            t_test.append(float(row[0]))
-            x_test.append(float(row[1]))
-            y_test.append(float(row[2]))
+            t_values.append(float(row[0]))
 
     checkpoint = torch.load(args.model_path)
 
@@ -62,13 +58,13 @@ if __name__ == "__main__":
     model_y.eval()
     print(model_y)
 
-    t = torch.unsqueeze(torch.FloatTensor(t_test), dim=1).to(device=args.device)
+    t = torch.unsqueeze(torch.FloatTensor(t_values), dim=1).to(device=args.device)
     x_pred = model_x(t)
     y_pred = model_y(t)
-    x = x_pred.cpu().numpy()
-    y = y_pred.cpu().numpy()
+    x_values = x_pred.cpu().numpy()
+    y_values = y_pred.cpu().numpy()
     csv_output_file = open(args.predicted_data_filename, 'w')
     with csv_output_file:
         writer = csv.writer(csv_output_file, delimiter=',')
-        for i in range(0, len(t_test)):
-            writer.writerow([t_test[i], x[i][0], y[i][0]])
+        for i in range(0, len(t_values)):
+            writer.writerow([t_values[i], x_values[i][0], y_values[i][0]])
