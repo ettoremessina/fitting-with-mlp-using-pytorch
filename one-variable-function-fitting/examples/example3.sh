@@ -9,7 +9,7 @@ python ../fx_fit.py --trainds datasets/example3_train.csv --modelout models/exam
   --epochs 500 --batch_size 100
 
 python ../fx_gen.py --dsout datasets/example3_test.csv  --fx "$FX" --rbegin $RB --rend $RE --rstep 0.0475
-python ../fx_predict.py --model models/example3.pth --testds datasets/example3_test.csv --predicted predictions/example3_pred.csv
+python ../fx_predict.py --model models/example3.pth --ds datasets/example3_test.csv --predicted predictions/example3_pred.csv
 
 python ../fx_plot.py --ds datasets/example3_test.csv --predicted predictions/example3_pred.csv
 #python ../fx_plot.py --ds datasets/example3_test.csv --predicted predictions/example3_pred.csv --savefig predictions/example3.png

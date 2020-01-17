@@ -1,12 +1,12 @@
 # One variable function fitting
 This project implements the fitting of a continuous and limited real-valued function defined in a closed interval of the reals.
-The function fitting is implemented using a configurable multilayer perceptron neural network written using PyTorch 1.2.0; it requires also NumPy and MatPlotLib libraries.
+The function fitting is implemented using a configurable multilayer perceptron written using PyTorch 1.2.0; it requires also NumPy and MatPlotLib libraries.
 
 It contains four python programs:
  - **fx_gen.py** generates a synthetic dataset file invoking a one-variable real function on an real interval.
- - **fx_fit.py** fits a one-variable function in an interval using a configurable multilayer perceptron neural network.
- - **fx_predict.py** makes a prediction on a test dataset of a one-variable function modeled with a pretrained multilayer perceptron neural network.
- - **fx_plot.py** shows two overlapped x/y scatter graphs: the blue one is the train dataset, the red one is the predicted one.
+ - **fx_fit.py** fits a one-variable function in an interval using a configurable multilayer perceptron.
+ - **fx_predict.py** makes a prediction of a one-variable function modeled with a pretrained multilayer perceptron.
+ - **fx_plot.py** shows two overlapped x/y scatter graphs: the blue one is the dataset, the red one is the prediction.
 
 ### Predefined examples of usage of the four command in cascade
 In the subfolder **examples** there are nine shell scripts to fit nine different one-variable functions; each script executes the four programs in cascade in order to reach and show the goal.
@@ -58,9 +58,9 @@ optional arguments:
 where:
 - **-h or --help** shows the above usage
 - **--rbegin** and **--rend** are the limit of the closed interval of reals of independent variable x.
-- **--rstep** is the increment step of independent variable x into interval.
+- **--rstep** is the incremental step of independent variable x into interval.
 - **--fx** is the function to use to compute the value of dependent variable; it is in lamba body format.
-- **--dsout** is the target dataset file name. The content of this file is csv and each line contains a couple of real numbers: the x and the f(x) where x is a value of the interval and f(x) is the value of dependent variable; the dataset is sorted by independent variable x. This argument is mandatory.
+- **--dsout** is the target dataset file name. The content of this file is csv and each line contains a couple of real numbers: the x and the f(x) where x is a value of the interval and f(x) is the value of dependent variable; This argument is mandatory.
 
 ### Examples of fx_gen.py usage
 ```bash
@@ -80,13 +80,11 @@ and you get
 ```
 usage: fx_fit.py [-h] --trainds TRAIN_DATASET_FILENAME --modelout MODEL_PATH
                  [--epochs EPOCHS] [--batch_size BATCH_SIZE]
-                 [--learning_rate LEARNING_RATE]
                  [--hlayers HIDDEN_LAYERS_LAYOUT [HIDDEN_LAYERS_LAYOUT ...]]
                  [--hactivations ACTIVATION_FUNCTIONS [ACTIVATION_FUNCTIONS ...]]
                  [--optimizer OPTIMIZER] [--loss LOSS] [--device DEVICE]
 
-fx_fit.py fits a one-variable function in an interval using a configurable
-multilayer perceptron network implemented in PyTorch
+fx_fit.py fits a one-variable function dataset using a configurable multilayer perceptron
 
 optional arguments:
   -h, --help                        show this help message and exit
@@ -94,7 +92,6 @@ optional arguments:
   --modelout MODEL_PATH             output model file
   --epochs EPOCHS                   number of epochs
   --batch_size BATCH_SIZE           batch size
-  --learning_rate LEARNING_RATE     learning rate
   --hlayers HIDDEN_LAYERS_LAYOUT [HIDDEN_LAYERS_LAYOUT ...] number of neurons for each hidden layers
   --hactivations ACTIVATION_FUNCTIONS [ACTIVATION_FUNCTIONS ...] activation functions between layers
   --optimizer OPTIMIZER             optimizer algorithm object
@@ -108,8 +105,6 @@ where:
 - **--modelout** is a non-existing file where the program saves the trained model (in pth format). This argument is mandatory.
 - **--epochs** is the number of epochs of the training process. The default is **500**
 - **--batch_size** is the size of the batch used during training. The default is **50**
-- **--learning_rate** is the learning rate. The default depends by the chosen optimizer (see below) in according with [PyTorch optimizer algorithm reference](https://pytorch.org/docs/stable/optim.html#algorithms).\
-**Note:** the learning rate can be passed either via **--learning_rate** command line argument or via **lr** named parameter of constructor (see below), but never in both way.
 - **--hlayers** is a sequence of integers: the size of the sequence is the number of hidden layers, each value of the sequence is the number of neurons in the correspondent layer. The default is **100** (one only hidden layer with 100 neurons),
 - **--hactivations** is a sequence of activation function constructor calls: the size of the sequence must be equal to the number of layers and each item of the sequence is the activation function to apply to the output of the neurons of the correspondent layer; please see [PyTorch activation function reference](https://pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity) for details about constructor named parameters and examples at the end of this section.\
   Available activation function constructors are:
@@ -146,6 +141,8 @@ where:
   - Rprop()
   - SGD()\
   The default is **Adam()**.
+  - **--learning_rate** is the learning rate. The default depends by the chosen optimizer (see below) in according with [PyTorch optimizer algorithm reference](https://pytorch.org/docs/stable/optim.html#algorithms).\
+  **Note:** an important parameter often passed to optimizer constructor is the learning rate: in order to pass a value for learning rate, pass via **lr** named parameter of constructor.
 - **--loss** is the constructor call of the loss function used by the training process. You can pass also named arguments between round brackets; please see [PyTorch loss functions reference](https://pytorch.org/docs/stable/nn.html#loss-functions) for details about constructor named parameters and examples at the end of this section.\
   Available loss function construtors are:
   - L1Loss()
@@ -182,11 +179,10 @@ $ python fx_fit.py \
   --trainds mytrainds.csv \
   --modelout mymodel.pth \
   --hlayers 120 160 \
-  --hactivations tanh relu \
+  --hactivations 'Tanh()' 'ReLU()' \
   --epochs 100 \
   --batch_size 50 \
-  --optimizer 'Adam(eps=1e-07)' \
-  --learning_rate 0.05 \
+  --optimizer 'Adam(lr=0.05, eps=1e-07)' \
   --loss 'MSELoss()'
 
 $ python fx_fit.py \
@@ -196,8 +192,7 @@ $ python fx_fit.py \
   --hactivation 'Sigmoid()' 'Sigmoid()' 'Sigmoid()' \
   --epochs 1000 \
   --batch_size 200 \
-  --optimizer 'Adamax()' \
-  --learning_rate 0.02
+  --optimizer 'Adamax(lr=0.02)'
 
 $ python fx_fit.py \
   --trainds mytrainds.csv
@@ -221,7 +216,7 @@ and you get
 ```
 usage: fx_predict.py [-h]
                      --model MODEL_PATH
-                     --testds TEST_DATASET_FILENAME
+                     --ds TEST_DATASET_FILENAME
                      --predictedout PREDICTED_DATA_FILENAME
                      [--device DEVICE]
 

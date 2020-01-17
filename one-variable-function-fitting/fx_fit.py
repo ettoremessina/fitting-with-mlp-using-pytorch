@@ -51,8 +51,6 @@ def build_optimizer(model):
     opt_init_tail = opt_init[bracket_pos+1:].strip()
     if opt_init_tail != ')':
         opt_init_tail = ', ' + opt_init_tail
-    if len(args.learning_rate.strip()) > 0:
-        opt_init_tail = ', lr=' + args.learning_rate + opt_init_tail
     opt_init = opt_init[:bracket_pos+1] + 'm.parameters()' + opt_init_tail
     exp_po = 'lambda m : to.' + opt_init
     optimizer = eval(exp_po)(model)
@@ -90,13 +88,6 @@ if __name__ == "__main__":
                         required=False,
                         default=50,
                         help='batch size')
-
-    parser.add_argument('--learning_rate',
-                        type=str,
-                        dest='learning_rate',
-                        required=False,
-                        default='',
-                        help='learning rate')
 
     parser.add_argument('--hlayers',
                         type=int,
