@@ -11,7 +11,7 @@ python ../pmc2t_fit_twin.py --trainds datasets/example1_twin_train.csv --modelou
   --epochs 250
 
 python ../pmc2t_gen.py --dsout datasets/example1_twin_test.csv  --xt "$FXT" --yt "$FYT" --rbegin 0 --rend 20.0 --rstep 0.0475
-python ../pmc2t_predict_twin.py --model models/example1_twin.pth --ds datasets/example1_twin_test.csv --predicted predictions/example1_twin_pred.csv
+python ../pmc2t_predict_twin.py --model models/example1_twin.pth --ds datasets/example1_twin_test.csv --predictionout predictions/example1_twin_pred.csv
 
-python ../pmc2t_plot.py --ds datasets/example1_twin_test.csv --predicted predictions/example1_twin_pred.csv
-#python ../pmc2t_plot.py --ds datasets/example1_twin_train.csv --predicted predictions/example1_pred_twin.csv --savefig predictions/example1_twin.png
+python ../pmc2t_plot.py --ds datasets/example1_twin_test.csv --prediction predictions/example1_twin_pred.csv
+#python ../pmc2t_plot.py --ds datasets/example1_twin_train.csv --prediction predictions/example1_pred_twin.csv --savefig predictions/example1_twin.png

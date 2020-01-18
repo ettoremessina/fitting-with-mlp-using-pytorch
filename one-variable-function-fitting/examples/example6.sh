@@ -12,6 +12,6 @@ python ../fx_fit.py --trainds datasets/example6_train.csv --modelout models/exam
 
 
 python ../fx_gen.py --dsout datasets/example6_test.csv  --fx "$FX" --rbegin $RB --rend $RE --rstep 0.0475
-python ../fx_predict.py --model models/example6.pth --ds datasets/example6_test.csv --predicted predictions/example6_pred.csv
+python ../fx_predict.py --model models/example6.pth --ds datasets/example6_test.csv --predictionout predictions/example6_pred.csv
 
-python ../fx_plot.py --ds datasets/example6_test.csv --predicted predictions/example6_pred.csv
+python ../fx_plot.py --ds datasets/example6_test.csv --prediction predictions/example6_pred.csv

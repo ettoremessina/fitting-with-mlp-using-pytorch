@@ -73,7 +73,7 @@ if __name__ == "__main__":
                         type=str,
                         dest='model_path',
                         required=True,
-                        help='output model path')
+                        help='output model file')
 
     parser.add_argument('--epochs',
                         type=int,
@@ -95,7 +95,7 @@ if __name__ == "__main__":
                         dest='hidden_layers_layout',
                         required=False,
                         default=[100],
-                        help='number of neurons for each hidden layers')
+                        help='number of neurons for each hidden layer')
 
     parser.add_argument('--hactivations',
                         type=str,
@@ -103,21 +103,21 @@ if __name__ == "__main__":
                         dest='activation_functions',
                         required=False,
                         default=['ReLU()'],
-                        help='activation functions between layers')
+                        help='activation functions between layer')
 
     parser.add_argument('--optimizer',
                         type=str,
                         dest='optimizer',
                         required=False,
                         default='Adam()',
-                        help='optimizer algorithm object')
+                        help='optimizer algorithm')
 
     parser.add_argument('--loss',
                         type=str,
                         dest='loss',
                         required=False,
                         default='MSELoss()',
-                        help='loss function name')
+                        help='loss function')
 
     parser.add_argument('--device',
                         type=str,

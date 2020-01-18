@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_fit_twin.py makes prediction of the couple of values of a parametric curve on plan modeled with two pretrained twin multilayer perceptrons each of them with only one output neuron')
+    parser = argparse.ArgumentParser(description='pmc2t_predict_twin.py makes prediction of couples of coordinates of a parametric curve on plan modeled with two pretrained twin multilayer perceptrons each of them with only one output neuron')
 
     parser.add_argument('--model',
                         type=str,
@@ -20,11 +20,11 @@ if __name__ == "__main__":
                         required=True,
                         help='dataset file (csv format); only t-values are used')
 
-    parser.add_argument('--predictedout',
+    parser.add_argument('--predictionout',
                         type=str,
-                        dest='predicted_data_filename',
+                        dest='prediction_data_filename',
                         required=True,
-                        help='predicted data file (csv format)')
+                        help='prediction data file (csv format)')
 
     parser.add_argument('--device',
                         type=str,
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     y_pred = model_y(t)
     x_values = x_pred.cpu().numpy()
     y_values = y_pred.cpu().numpy()
-    csv_output_file = open(args.predicted_data_filename, 'w')
+    csv_output_file = open(args.prediction_data_filename, 'w')
     with csv_output_file:
         writer = csv.writer(csv_output_file, delimiter=',')
         for i in range(0, len(t_values)):

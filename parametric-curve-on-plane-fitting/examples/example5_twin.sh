@@ -12,7 +12,7 @@ python ../pmc2t_fit_twin.py --trainds datasets/example5_twin_train.csv --modelou
   --optimizer 'Adamax(lr=0.01)'
 
 python ../pmc2t_gen.py --dsout datasets/example5_twin_test.csv --xt "$FXT" --yt "$FYT" --rbegin 0 --rend 12.56 --rstep 0.0475
-python ../pmc2t_predict_twin.py --model models/example5_twin.pth --ds datasets/example5_twin_test.csv --predicted predictions/example5_twin_pred.csv
+python ../pmc2t_predict_twin.py --model models/example5_twin.pth --ds datasets/example5_twin_test.csv --predictionout predictions/example5_twin_pred.csv
 
-python ../pmc2t_plot.py --ds datasets/example5_twin_test.csv --predicted predictions/example5_twin_pred.csv
-#python ../pmc2t_plot.py --trainds datasets/example5_twin_test.csv --predicted predictions/example5_twin_pred.csv --savefig predictions/example5_twin.png
+python ../pmc2t_plot.py --ds datasets/example5_twin_test.csv --prediction predictions/example5_twin_pred.csv
+#python ../pmc2t_plot.py --trainds datasets/example5_twin_test.csv --prediction predictions/example5_twin_pred.csv --savefig predictions/example5_twin.png

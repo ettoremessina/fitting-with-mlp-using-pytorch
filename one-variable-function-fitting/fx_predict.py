@@ -20,11 +20,11 @@ if __name__ == "__main__":
                         required=True,
                         help='dataset file (csv format); only x-values are used')
 
-    parser.add_argument('--predictedout',
+    parser.add_argument('--predictionout',
                         type=str,
-                        dest='predicted_data_filename',
+                        dest='prediction_data_filename',
                         required=True,
-                        help='predicted data file (csv format)')
+                        help='prediction data file (csv format)')
 
     parser.add_argument('--device',
                         type=str,
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     x = torch.unsqueeze(torch.FloatTensor(x_values), dim=1).to(device=args.device)
     y_pred = model(x)
     y_values = y_pred.cpu().numpy()
-    csv_output_file = open(args.predicted_data_filename, 'w')
+    csv_output_file = open(args.prediction_data_filename, 'w')
     with csv_output_file:
         writer = csv.writer(csv_output_file, delimiter=',')
         for i in range(0, len(x_values)):

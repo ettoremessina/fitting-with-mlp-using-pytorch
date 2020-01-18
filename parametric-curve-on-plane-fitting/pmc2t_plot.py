@@ -11,11 +11,11 @@ if __name__ == "__main__":
                         required=True,
                         help='dataset file (csv format)')
 
-    parser.add_argument('--predicted',
+    parser.add_argument('--prediction',
                         type=str,
-                        dest='predicted_data_filename',
+                        dest='prediction_data_filename',
                         required=True,
-                        help='predicted data file (csv format)')
+                        help='prediction data file (csv format)')
 
     parser.add_argument('--savefig',
                         type=str,
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         for row in csv_reader:
             plt.scatter(float(row[1]), float(row[2]), color='blue', s=1, marker='.')
 
-    with open(args.predicted_data_filename) as csv_file:
+    with open(args.prediction_data_filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             plt.scatter(float(row[1]), float(row[2]), color='red', s=2, marker='.')
