@@ -1,5 +1,6 @@
 import argparse
 import csv
+import time
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
@@ -26,6 +27,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    print("#### Started {} {} ####".format(__file__, args));
+
     with open(args.dataset_filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
@@ -40,3 +43,5 @@ if __name__ == "__main__":
         plt.savefig(args.save_figure_filename)
     else:
         plt.show()
+
+    print("#### Terminated {} ####".format(__file__));

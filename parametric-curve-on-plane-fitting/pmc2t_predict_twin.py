@@ -1,5 +1,6 @@
 import argparse
 import csv
+import time
 import torch
 from torch.autograd import Variable
 import torch.nn as nn
@@ -12,7 +13,7 @@ if __name__ == "__main__":
                         type=str,
                         dest='model_path',
                         required=True,
-                        help='model path')
+                        help='model file')
 
     parser.add_argument('--ds',
                         type=str,
@@ -34,6 +35,8 @@ if __name__ == "__main__":
                         help='target device')
 
     args = parser.parse_args()
+
+    print("#### Started {} {} ####".format(__file__, args));
 
     t_values = []
     with open(args.dataset_filename) as csv_file:
@@ -68,3 +71,5 @@ if __name__ == "__main__":
         writer = csv.writer(csv_output_file, delimiter=',')
         for i in range(0, len(t_values)):
             writer.writerow([t_values[i], x_values[i][0], y_values[i][0]])
+
+    print("#### Terminated {} ####".format(__file__));

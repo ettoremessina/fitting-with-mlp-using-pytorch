@@ -76,7 +76,7 @@ if __name__ == "__main__":
                         type=str,
                         dest='model_path',
                         required=True,
-                        help='output model path')
+                        help='output model file')
 
     parser.add_argument('--epochs',
                         type=int,

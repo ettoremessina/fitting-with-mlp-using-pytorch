@@ -1,5 +1,6 @@
 import argparse
 import csv
+import time
 import torch
 from torch.autograd import Variable
 import torch.nn as nn
@@ -35,6 +36,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    print("#### Started {} {} ####".format(__file__, args));
+
     x_values = []
     with open(args.dataset_filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -58,3 +61,5 @@ if __name__ == "__main__":
         writer = csv.writer(csv_output_file, delimiter=',')
         for i in range(0, len(x_values)):
             writer.writerow([x_values[i], y_values[i][0]])
+
+    print("#### Terminated {} ####".format(__file__));
