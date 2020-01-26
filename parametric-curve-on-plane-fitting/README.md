@@ -62,8 +62,8 @@ calling a couple of one-variable real functions in an interval
 optional arguments:
   -h, --help            show this help message and exit
   --dsout DS_OUTPUT_FILENAME dataset output file (csv format)
-  --xt FUNCX_T_BODY          x=fx(t) body (lamba format)
-  --yt FUNCY_T_BODY          y=fy(t) body (lamba format)
+  --xt FUNCX_T_BODY          x=x(t) body (lamba format)
+  --yt FUNCY_T_BODY          y=y(t) body (lamba format)
   --rbegin RANGE_BEGIN       begin range (default:-5.0)
   --rend RANGE_END           end range (default:+5.0)
   --rstep RANGE_STEP         step range (default: 0.01)
@@ -73,9 +73,9 @@ Namely:
 - **-h or --help** shows the above usage
 - **--rbegin** and **--rend** are the limit of the closed interval of reals of independent parameter t.
 - **--rstep** is the increment step of independent parameter t into interval.
-- **--xt** is the function to use to compute the value of dependent variable x=fx(t); it is in lamba body format.
-- **--yt** is the function to use to compute the value of dependent variable y=fy(t); it is in lamba body format.
-- **--dsout** is the target dataset file name. The content of this file is csv (no header at first line) and each line contains a triple of real numbers: t, fx(t) and fy(t) where t is a value of the interval and fx(t) and fy(t) are the values of dependent variables. This argument is mandatory.
+- **--xt** is the function to use to compute the value of dependent variable x=x(t); it is in lamba body format.
+- **--yt** is the function to use to compute the value of dependent variable y=y(t); it is in lamba body format.
+- **--dsout** is the target dataset file name. The content of this file is csv (no header at first line) and each line contains a triple of real numbers: t, x(t) and y(t) where t is a value of the interval and x(t) and y(t) are the values of dependent variables. This argument is mandatory.
 
 ### Example of pmc2t_gen.py usage
 ```bash
