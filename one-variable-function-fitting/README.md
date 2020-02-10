@@ -27,7 +27,7 @@ $ sh example9.sh
 For details about the four commands and their command line options, please read below.
 
 
-## fx_gen.py
+## fx_gen.py<a name="fx_gen"/>
 To get the usage of [fx_gen.py](./fx_gen.py) please run:
 ```bash
 $ python fx_gen.py --help
@@ -69,7 +69,7 @@ $ python fx_gen.py --dsout mydataset.csv  --fx "np.sqrt(np.abs(x))" --rbegin -5.
 ```
 
 
-## fx_fit.py
+## fx_fit.py<a name="fx_fit"/>
 To get the usage of [fx_fit.py](./fx_fit.py) please run:
 ```bash
 $ python fx_fit.py --help
@@ -208,8 +208,8 @@ $ python fx_fit.py \
 ```
 
 
-## fx_predict.py
-To get the usage of [fx_predict.py](./fx_predict.py) please run:
+## fx_predict.py<a name="fx_predict"/>
+To get the usage of [fx_predict.py](./fx_predict.py) please run
 ```bash
 $ python fx_predict.py --help
 ```
@@ -245,8 +245,8 @@ $ python fx_predict.py --model mymodel.pth --ds mytestds.csv --predictionout myp
 ```
 
 
-## fx_plot.py
-To get the usage of [fx_plot.py](./fx_plot.py) please run:
+## fx_plot.py<a name="fx_plot"/>
+To get the usage of [fx_plot.py](./fx_plot.py) please run
 ```bash
 $ python fx_plot.py --help
 ```
