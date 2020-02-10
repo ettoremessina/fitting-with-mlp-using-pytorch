@@ -15,13 +15,13 @@ if __name__ == "__main__":
                         type=str,
                         dest='funcx_t_body',
                         required=True,
-                        help='x=fx(t) body (lamba format)')
+                        help='x=x(t) body (lamba format)')
 
     parser.add_argument('--yt',
                         type=str,
                         dest='funcy_t_body',
                         required=True,
-                        help='y=fy(t) body (lamba format)')
+                        help='y=y(t) body (lamba format)')
 
 
     parser.add_argument('--rbegin',
