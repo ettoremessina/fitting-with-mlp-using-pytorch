@@ -40,7 +40,7 @@ The **twin** variant spends double of time, so it is not nice from performance p
 For details about the commands and their command line options, please read below.
 
 
-## pmc2t_gen.py
+## pmc2t_gen.py<a name="pmc2t_gen"/>
 To get the usage of [pmc2t_gen.py](./pmc2t_gen.py) please run:
 ```bash
 $ python pmc2t_gen.py --help
@@ -83,7 +83,7 @@ $ python pmc2t_gen.py --dsout mydataset.csv  --xt "0.1 * t * np.cos(t)" --yt "0.
 ```
 
 
-## pmc2t_fit.py and pmc2t_fit_twin.py
+## pmc2t_fit.py and pmc2t_fit_twin.py<a name="pmc2t_fit"/>
 To get the usage of [pmc2t_fit.py](./pmc2t_fit.py) please run:
 ```bash
 $ python pmc2t_fit.py --help
@@ -225,7 +225,7 @@ $ python pmc2t_fit_twin.py \
 ```
 
 
-## pmc2t_predict.py and pmc2t_predict_twin.py
+## pmc2t_predict.py and pmc2t_predict_twin.py<a name="pmc2t_predict"/>
 To get the usage of [pmc2t_predict.py](./pmc2t_predict.py) please run:
 ```bash
 $ python pmc2t_predict.py --help
@@ -272,7 +272,7 @@ $ python pmc2t_predict_twin.py --model mymodeltwin.pth --ds mytestds.csv --predi
 ```
 
 
-## pmc2t_plot.py
+## pmc2t_plot.py<a name="pmc2t_plot"/>
 To get the usage of [pmc2t_plot.py](./pmc2t_plot.py) please run:
 ```bash
 $ python pmc2t_plot.py --help
