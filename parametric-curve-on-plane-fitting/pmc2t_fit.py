@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.optim as to
 import torch.utils.data as tud
 
-class ParamCurveOnPlanTrainData(tud.Dataset):
+class ParamCurveOnPlaneTrainData(tud.Dataset):
     t_train = []
     x_train = []
     y_train = []
@@ -63,7 +63,7 @@ def build_loss():
     return eval(exp_loss)(None)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_fit.py fits a parametric curve on plan dataset using a configurable multilayer perceptron with two output neurons')
+    parser = argparse.ArgumentParser(description='pmc2t_fit.py fits a parametric curve on plane dataset using a configurable multilayer perceptron with two output neurons')
 
     parser.add_argument('--trainds',
                         type=str,
@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
     print("#### Started {} {} ####".format(__file__, args));
 
-    dataset = ParamCurveOnPlanTrainData(args.train_dataset_filename)
+    dataset = ParamCurveOnPlaneTrainData(args.train_dataset_filename)
     dataloader = tud.DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=1)
 
     model = build_model().to(device=args.device)

@@ -1,6 +1,5 @@
 import argparse
 import csv
-import os
 import time
 import numpy as np
 import torch
@@ -8,10 +7,11 @@ import torch.nn as nn
 import torch.optim as to
 import torch.utils.data as tud
 
-class ParamCurveOnPlaneTrainData(tud.Dataset):
+class ParamCurveInSpaceTrainData(tud.Dataset):
     t_train = []
     x_train = []
     y_train = []
+    z_train = []
 
     def __init__(self, train_dataset_filename):
             with open(args.train_dataset_filename) as csv_file:
@@ -20,9 +20,10 @@ class ParamCurveOnPlaneTrainData(tud.Dataset):
                     self.t_train.append(float(row[0]))
                     self.x_train.append(float(row[1]))
                     self.y_train.append(float(row[2]))
+                    self.z_train.append(float(row[3]))
 
     def __getitem__(self, index):
-        return self.t_train[index], self.x_train[index], self.y_train[index]
+        return self.t_train[index], self.x_train[index], self.y_train[index], self.z_train[index]
 
     def __len__(self):
         return len(self.t_train)
@@ -39,7 +40,7 @@ def build_model():
     af = args.activation_functions[num_of_layers-1]
     if af.lower() != 'none':
         layers.append(build_activation_function(af))
-    layers.append(nn.Linear(args.hidden_layers_layout[num_of_layers-1], 1))
+    layers.append(nn.Linear(args.hidden_layers_layout[num_of_layers-1], 3))
     return nn.Sequential(*layers)
 
 def build_activation_function(af):
@@ -64,7 +65,7 @@ def build_loss():
     return eval(exp_loss)(None)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_fit_twin.py fits a parametric curve on plane dataset using two configurable twin multilayer perceptrons each of them with only one output neuron')
+    parser = argparse.ArgumentParser(description='pmc3t_fit.py fits a parametric curve in space dataset using a configurable multilayer perceptron with two output neurons')
 
     parser.add_argument('--trainds',
                         type=str,
@@ -136,61 +137,42 @@ if __name__ == "__main__":
 
     print("#### Started {} {} ####".format(__file__, args));
 
-    dataset = ParamCurveOnPlaneTrainData(args.train_dataset_filename)
+    dataset = ParamCurveInSpaceTrainData(args.train_dataset_filename)
     dataloader = tud.DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=1)
 
-    model_x = build_model().to(device=args.device)
-    model_y = build_model().to(device=args.device)
-    print(model_x)
+    model = build_model().to(device=args.device)
+    print(model)
 
-    optimizer_x = build_optimizer(model_x)
-    loss_func_x = build_loss().to(device=args.device)
-
-    optimizer_y = build_optimizer(model_y)
-    loss_func_y = build_loss().to(device=args.device)
+    optimizer = build_optimizer(model)
+    loss_func = build_loss().to(device=args.device)
 
     start_time = time.time()
     for epoch in range(args.epochs):
-        print('MLP #1, Epoch {}/{}'.format(epoch+1, args.epochs))
+        print('Epoch {}/{}'.format(epoch+1, args.epochs))
 
         print('[', end = '')
         for batch_num, batch_data in enumerate(dataloader):
             print('=', end = '')
             t_train = torch.unsqueeze(torch.FloatTensor(batch_data[0].float()), dim=1).to(device=args.device)
-            x_train = torch.unsqueeze(torch.FloatTensor(batch_data[1].float()), dim=1).to(device=args.device);
-            prediction_x = model_x(t_train)
-            loss_x = loss_func_x(prediction_x, x_train)
-            optimizer_x.zero_grad()
-            loss_x.backward()
-            optimizer_x.step()
-        print (']/{} - loss: {}'.format(batch_num, loss_x.item()))
-
-    for epoch in range(args.epochs):
-        print('MLP #2, Epoch {}/{}'.format(epoch+1, args.epochs))
-
-        print('[', end = '')
-        for batch_num, batch_data in enumerate(dataloader):
-            print('=', end = '')
-            t_train = torch.unsqueeze(torch.FloatTensor(batch_data[0].float()), dim=1).to(device=args.device)
-            y_train = torch.unsqueeze(torch.FloatTensor(batch_data[2].float()), dim=1).to(device=args.device);
-            prediction_y = model_y(t_train)
-            loss_y = loss_func_y(prediction_y, y_train)
-            optimizer_y.zero_grad()
-            loss_y.backward()
-            optimizer_y.step()
-        print (']/{} - loss: {}'.format(batch_num, loss_y.item()))
+            x_train = torch.FloatTensor(batch_data[1].float()).to(device=args.device);
+            y_train = torch.FloatTensor(batch_data[2].float()).to(device=args.device);
+            z_train = torch.FloatTensor(batch_data[3].float()).to(device=args.device);
+            xyz_train = torch.stack((x_train.T, y_train.T, z_train.T)).T;
+            prediction = model(t_train)
+            loss = loss_func(prediction, xyz_train)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+        print (']/{} - loss: {}'.format(batch_num, loss.item()))
 
     elapsed_time = time.time() - start_time
     print ("Training time:", time.strftime("%H:%M:%S", time.gmtime(elapsed_time)))
 
     checkpoint = {
-        'model_x': model_x,
-        'state_dict_x': model_x.state_dict(),
-        'optimizer_x' : optimizer_x.state_dict(),
-        'model_y': model_y,
-        'state_dict_y': model_y.state_dict(),
-        'optimizer_y' : optimizer_y.state_dict(),
-         }
+        'model': model,
+        'state_dict': model.state_dict(),
+        'optimizer' : optimizer.state_dict() }
+
     torch.save(checkpoint, args.model_path)
 
     print("#### Terminated {} ####".format(__file__));

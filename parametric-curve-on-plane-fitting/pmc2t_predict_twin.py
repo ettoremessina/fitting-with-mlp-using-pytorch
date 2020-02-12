@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_predict_twin.py makes prediction of couples of coordinates of a parametric curve on plan modeled with two pretrained twin multilayer perceptrons each of them with only one output neuron')
+    parser = argparse.ArgumentParser(description='pmc2t_predict_twin.py makes prediction of couples of coordinates of a parametric curve on plane modeled with two pretrained twin multilayer perceptrons each of them with only one output neuron')
 
     parser.add_argument('--model',
                         type=str,

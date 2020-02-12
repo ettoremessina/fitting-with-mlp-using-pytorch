@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_predict.py makes prediction of couples of coordinates of a parametric curve on plane modeled with a pretrained multilayer perceptron with two output neurons')
+    parser = argparse.ArgumentParser(description='pmc3t_predict.py makes prediction of couples of coordinates of a parametric curve in space modeled with a pretrained multilayer perceptron with two output neurons')
 
     parser.add_argument('--model',
                         type=str,
@@ -54,12 +54,12 @@ if __name__ == "__main__":
     print(model)
 
     t = torch.unsqueeze(torch.FloatTensor(t_values), dim=1).to(device=args.device)
-    xy_pred = model(t)
-    xy_values = xy_pred.cpu().numpy()
+    xyz_pred = model(t)
+    xyz_values = xyz_pred.cpu().numpy()
     csv_output_file = open(args.prediction_data_filename, 'w')
     with csv_output_file:
         writer = csv.writer(csv_output_file, delimiter=',')
         for i in range(0, len(t_values)):
-            writer.writerow([t_values[i], xy_values[i][0], xy_values[i][1]])
+            writer.writerow([t_values[i], xyz_values[i][0], xyz_values[i][1], xyz_values[i][2]])
 
     print("#### Terminated {} ####".format(__file__));

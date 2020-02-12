@@ -3,7 +3,7 @@ import numpy as np
 import csv
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='pmc2t_gen.py generates a synthetic dataset file that contains the points of a parametric curve on plane calling a couple of one-variable real functions in an interval')
+    parser = argparse.ArgumentParser(description='pmc3t_gen.py generates a synthetic dataset file that contains the points of a parametric curve in space calling a triple of one-variable real functions in an interval')
 
     parser.add_argument('--dsout',
                         type=str,
@@ -22,6 +22,12 @@ if __name__ == "__main__":
                         dest='funcy_t_body',
                         required=True,
                         help='y=y(t) body (lamba format)')
+
+    parser.add_argument('--zt',
+                        type=str,
+                        dest='funcz_t_body',
+                        required=True,
+                        help='z=z(t) body (lamba format)')
 
 
     parser.add_argument('--rbegin',
@@ -52,10 +58,11 @@ if __name__ == "__main__":
     t_values = np.arange(args.range_begin, args.range_end, args.range_step, dtype=float)
     funcx_t = eval('lambda t: ' + args.funcx_t_body)
     funcy_t = eval('lambda t: ' + args.funcy_t_body)
+    funcz_t = eval('lambda t: ' + args.funcz_t_body)
     csv_ds_output_file = open(args.ds_output_filename, 'w')
     with csv_ds_output_file:
         writer = csv.writer(csv_ds_output_file, delimiter=',')
         for i in range(0, t_values.size):
-            writer.writerow([t_values[i], funcx_t(t_values[i]), funcy_t(t_values[i])])
+            writer.writerow([t_values[i], funcx_t(t_values[i]), funcy_t(t_values[i]), funcz_t(t_values[i])])
 
     print("#### Terminated {} ####".format(__file__));
