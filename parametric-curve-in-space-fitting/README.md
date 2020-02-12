@@ -277,4 +277,6 @@ Namely:
 ### Examples of pmc3t_plot.py usage
 ```bash
 $ python pmc3t_plot.py --ds mytestds.csv --prediction myprediction.csv
+
+$ python pmc3t_plot.py --ds mytrainds.csv --prediction myprediction.csv --savefig mychart.png
 ```
