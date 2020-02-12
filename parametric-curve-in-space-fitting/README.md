@@ -6,7 +6,7 @@ Please visit [here](https://computationalmindset.com/en/posts/neural-networks/pa
 
 It contains four python programs:
 - **pmc3t_gen.py** generates a synthetic dataset file invoking a pair of one-variable real functions defined on an real interval: first one for x=x(t) coordinate and the other one for y=y(t) coordinate.
-- **pmc3t_fit.py** fits a parametric curve on plane using a configurable multilayer perceptron in order to fit a vector function f(t) = [x(t), y(t)].
+- **pmc3t_fit.py** fits a parametric curve in space using a configurable multilayer perceptron in order to fit a vector function f(t) = [x(t), y(t)].
 - **pmc3t_predict.py** makes a prediction on a parametric curve on place modeled with a pretrained multilayer perceptron.
 - **pmc3t_plot.py** shows two overlapped x/y scatter graphs: the blue one is the input dataset, the red one is the prediction.
 
@@ -222,7 +222,7 @@ usage: pmc3t_predict.py [-h]
                         [--device DEVICE]
 
 pmc3t_predict.py makes prediction of couples of coordinates of a parametric curve
-in space modeled with a pretrained multilayer perceptron with two output neurons
+in space modeled with a pretrained multilayer perceptron with three output neurons
 
 optional arguments:
   -h, --help            show this help message and exit
