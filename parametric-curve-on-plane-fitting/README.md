@@ -241,8 +241,8 @@ usage: pmc2t_predict.py [-h]
                         --predictionout PREDICTION_DATA_FILENAME
                         [--device DEVICE]
 
-pmc2t_predict.py makes prediction of couples of coordinates of a parametric curve on
-plan modeled with a pretrained multilayer perceptron with two output neurons
+pmc2t_predict.py makes prediction of couples of coordinates of a parametric curve
+on plane modeled with a pretrained multilayer perceptron with two output neurons
 
 optional arguments:
   -h, --help            show this help message and exit

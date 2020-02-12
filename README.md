@@ -6,8 +6,9 @@ The project [One variable function fitting](./one-variable-function-fitting) imp
 Please visit [here](https://computationalmindset.com/en/posts/neural-networks/one-variable-function-fitting-with-pytorch.html) for concepts about this project.
 
 ## Parametric curve on plane fitting
-The project [Parametric curve on plane fitting](./parametric-curve-on-plane-fitting) implements the fitting of a continuous and limited real-valued parametric curve on plane where parameter belongs to a closed interval of the reals. It implements two alternative techniques: the official one implements one MLP that fits a vector function f(t) = [x(t), y(t)] instead the 'twin' variant implements a pair of twins of MLPs that fit separately the one variable functions x(t) and y(t)..<br />
+The project [Parametric curve on plane fitting](./parametric-curve-on-plane-fitting) implements the fitting of a continuous and limited real-valued parametric curve on plane where parameter belongs to a closed interval of the reals. It implements two alternative techniques: the official one implements one MLP that fits a vector function f(t) = [x(t), y(t)] instead the 'twin' variant implements a pair of twins of MLPs that fit separately the one variable functions x(t) and y(t).<br />
 Please visit [here](https://computationalmindset.com/en/posts/neural-networks/parametric-curve-on-plane-fitting-with-pytorch.html) for concepts about this project.
 
 ## Parametric curve in space fitting
-The project [Parametric curve in space fitting](./parametric-curve-in-space-fitting) implements the fitting of a continuous and limited real-valued parametric curve in space where parameter belongs to a closed interval of the reals.
+The project [Parametric curve in space fitting](./parametric-curve-in-space-fitting) implements the fitting of a continuous and limited real-valued parametric curve in space where parameter belongs to a closed interval of the reals.<br />
+Please visit [here](https://computationalmindset.com/en/posts/neural-networks/parametric-curve-in-space-fitting-with-pytorch.html) for concepts about this project.
