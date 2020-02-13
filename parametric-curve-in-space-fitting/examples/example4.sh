@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#Hypocycloid 8/3
-
 FXT="np.sqrt(t)"
 FYT="np.sqrt(t)"
 FZT="t * np.cos(t)"
