@@ -5,10 +5,10 @@ The curve fitting is implemented using a configurable multilayer perceptron neur
 Please visit [here](https://computationalmindset.com/en/posts/neural-networks/parametric-curve-in-space-fitting-with-pytorch.html) for concepts about this project.
 
 It contains four python programs:
-- **pmc3t_gen.py** generates a synthetic dataset file invoking a pair of one-variable real functions defined on an real interval: first one for x=x(t) coordinate and the other one for y=y(t) coordinate.
-- **pmc3t_fit.py** fits a parametric curve in space using a configurable multilayer perceptron in order to fit a vector function f(t) = [x(t), y(t)].
-- **pmc3t_predict.py** makes a prediction on a parametric curve on place modeled with a pretrained multilayer perceptron.
-- **pmc3t_plot.py** shows two overlapped x/y scatter graphs: the blue one is the input dataset, the red one is the prediction.
+- **pmc3t_gen.py** generates a synthetic dataset file invoking a triple of one-variable real functions defined on an real interval: first one for x=x(t) coordinate, second one for y=y(t) coordinate and third one for z=z(t) coordinate.
+- **pmc3t_fit.py** fits a parametric curve in space using a configurable multilayer perceptron in order to fit a vector function f(t) = [x(t), y(t), z(t)].
+- **pmc3t_predict.py** makes a prediction on a parametric curve in space modeled with a pretrained multilayer perceptron.
+- **pmc3t_plot.py** shows two overlapped x/y/z scatter graphs: the blue one is the input dataset, the red one is the prediction.
 
 
 ### Predefined examples of usage of the four command in cascade
@@ -63,7 +63,7 @@ Namely:
 - **--rstep** is the increment step of independent parameter t into interval.
 - **--xt** is the function to use to compute the value of dependent variable x=x(t); it is in lamba body format.
 - **--yt** is the function to use to compute the value of dependent variable y=y(t); it is in lamba body format.
-- **--zt** is the function to use to compute the value of dependent variable y=y(t); it is in lamba body format.
+- **--zt** is the function to use to compute the value of dependent variable z=z(t); it is in lamba body format.
 - **--dsout** is the target dataset file name. The content of this file is csv (no header at first line) and each line contains a triple of real numbers: t, x(t) and y(t) where t is a value of the interval and x(t) and y(t) are the values of dependent variables. This argument is mandatory.
 
 ### Example of pmc3t_gen.py usage
@@ -109,7 +109,7 @@ optional arguments:
 
 Namely:
 - **-h or --help** shows the above usage
-- **--trainds** is the input training dataset in csv format: a triple of real numbers for each line respectively for x and y (no header at first line). In case you haven't a such real world true dataset, for your experiments you can generate it synthetically using **pmc3t_gen.py**. This argument is mandatory.
+- **--trainds** is the input training dataset in csv format: four real numbers for each line respectively for x and y (no header at first line). In case you haven't a such real world true dataset, for your experiments you can generate it synthetically using **pmc3t_gen.py**. This argument is mandatory.
 - **--modelout** is a non-existing file where the program saves the trained model (in pth format). This argument is mandatory.
 - **--epochs** is the number of epochs of the training process. The default is **500**
 - **--batch_size** is the size of the batch used during training. The default is **50**
