@@ -1,84 +1,79 @@
-# One-variable real-valued function fitting
-This project implements the fitting of a continuous and limited real-valued function defined in a closed interval of the reals.
-This one-variable real-valued function fitting is implemented using a configurable multilayer perceptron neural network written using PyTorch 1.2.0; it requires also NumPy and MatPlotLib libraries.<br/>
-
-Please visit [here](https://computationalmindset.com/en/posts/neural-networks/one-variable-function-fitting-with-pytorch.html) for concepts about this project.
+# Two-variables real-valued function fitting
+This project implements the fitting of a continuous and limited real-valued function of two variables constrained in a rectangle.
+This two-variables real-valued function fitting is implemented using a configurable multilayer perceptron neural network written using PyTorch 1.2.0; it requires also NumPy and MatPlotLib libraries.<br/>
 
 It contains four python programs:
- - **fx_gen.py** generates a synthetic dataset file invoking a one-variable real-valued function on an real interval.
- - **fx_fit.py** fits a one-variable real-valued function in an interval using a configurable multilayer perceptron.
- - **fx_predict.py** makes a prediction of a one-variable real-valued function modeled with a pretrained multilayer perceptron.
- - **fx_plot.py** shows two overlapped x/y scatter graphs: the blue one is the input dataset, the red one is the prediction.
+ - **fxy_gen.py** generates a synthetic dataset file invoking a two-variables real-valued function constrained in a rectangle.
+ - **fxy_fit.py** fits a two-variables real-valued function constrained in a rectangle using a configurable multilayer perceptron.
+ - **fxy_predict.py** makes a prediction of a two-variables real-valued function modeled with a pretrained multilayer perceptron.
+ - **fxy_plot.py** shows two non overlapped x/y/z scatter graphs: the blue one is the input dataset, the red one is the prediction.
 
 ### Predefined examples of usage of the four command in cascade
-In the subfolder **examples** there are nine shell scripts to fit nine different one-variable real-valued functions; each script executes the four programs in cascade in order to reach and show the goal.
+In the subfolder **examples** there are three shell scripts to fit three different two-variables real-valued functions; each script executes the four programs in cascade in order to reach and show the goal.
 
 ```bash
-$ cd one-variable-function-fitting/examples
+$ cd two-variables-function-fitting/examples
 $ sh example1.sh
 $ sh example2.sh
 $ sh example3.sh
-$ sh example4.sh
-$ sh example5.sh
-$ sh example6.sh
-$ sh example7.sh
-$ sh example8.sh
-$ sh example9.sh
 ```
 
 For details about the four commands and their command line options, please read below.
 
 
-## fx_gen.py<a name="fx_gen"/>
-To get the usage of [fx_gen.py](./fx_gen.py) please run:
+## fxy_gen.py<a name="fxy_gen"/>
+To get the usage of [fxy_gen.py](./fxy_gen.py) please run:
 ```bash
-$ python fx_gen.py --help
+$ python fxy_gen.py --help
 ```
 
 and you get:
 ```
-usage: fx_gen.py [-h]
+usage: fxy_gen.py [-h]
                  --dsout DS_OUTPUT_FILENAME
-                 --fx FUNC_X_BODY
-                 [--rbegin RANGE_BEGIN]
-                 [--rend RANGE_END]
+                 --fxy FUNC_XY_BODY
+                 [--rxbegin RANGE_XBEGIN] [--rxend RANGE_XEND]
+                 [--rybegin RANGE_YBEGIN] [--ryend RANGE_YEND]
                  [--rstep RANGE_STEP]
 
-fx_gen.py generates a synthetic dataset file calling a one-variable real-valued function in an interval
+fxy_gen.py generates a synthetic dataset file calling a two-variables real-valued function constrained in a rectangle.
 
 optional arguments:
   -h, --help                 show this help message and exit
   --dsout DS_OUTPUT_FILENAME dataset output file (csv format)
-  --fx FUNC_X_BODY           f(x) body (lamba format)
-  --rbegin RANGE_BEGIN       begin range (default:-5.0)
-  --rend RANGE_END           end range (default:+5.0)
+  --fxy FUNC_XY_BODY         f(x,y) body (lamba format)
+  --rxbegin RANGE_XBEGIN     begin x range (default:-5.0)
+  --rxend RANGE_XEND         end x range (default:+5.0)
+  --rybegin RANGE_YBEGIN     begin y range (default:-5.0)
+  --ryend RANGE_YEND         end y range (default:+5.0)
   --rstep RANGE_STEP         step range (default: 0.01)
 ```
 
 Namely:
 - **-h or --help** shows the above usage
-- **--rbegin** and **--rend** are the limit of the closed interval of reals of independent variable x.
+- **--rxbegin** and **--rxend** are the limit of the closed interval of reals of independent variable x.
+- **--rybegin** and **--ryend** are the limit of the closed interval of reals of independent variable y.
 - **--rstep** is the incremental step of independent variable x into the interval.
-- **--fx** is the one-variable real-value function to use to compute the value of dependent variable; it is in lamba body format.
-- **--dsout** is the target dataset file name. The content of this file is csv (no header at first line) and each line contains a couple of real numbers: the x and the f(x) where x is a value of the interval and f(x) is the value of dependent variable. This argument is mandatory.
+- **--fxy** is the two-variables real-value function to use to compute the value of dependent variable; it is in lamba body format.
+- **--dsout** is the target dataset file name. The content of this file is csv (no header at first line) and each line contains a triple of real numbers: the x, the y and the f(x, y) where x is a value of the interval [rxbegin, rxend], y is a value in the interval [rybegin, ryend] and f(x, y) is the value of dependent variable. This argument is mandatory.
 
-### Examples of fx_gen.py usage
+### Examples of fxy_gen.py usage
 ```bash
-$ python fx_gen.py --dsout mydataset.csv  --fx "np.exp(np.sin(x))" --rbegin -6.0 --rend 6.0 --rstep 0.05
+$ python fxy_gen.py --dsout mydataset.csv  --fxy "x**2 + y**2" --rxbegin -3.0 --rxend 3.0  --rybegin -3.0 --ryend 3.0 --rstep 0.05
 
-$ python fx_gen.py --dsout mydataset.csv  --fx "np.sqrt(np.abs(x))" --rbegin -5.0 --rend 5.0 --rstep 0.04
+$ python fxy_gen.py --dsout mydataset.csv  --fxy "np.sin(np.sqrt(x**2 + y**2))" --rxbegin -5.0 --rxend 5.0  --rybegin -5.0 --ryend 5.0 --rstep 0.04
 ```
 
 
-## fx_fit.py<a name="fx_fit"/>
-To get the usage of [fx_fit.py](./fx_fit.py) please run:
+## fxy_fit.py<a name="fxy_fit"/>
+To get the usage of [fxy_fit.py](./fxy_fit.py) please run:
 ```bash
-$ python fx_fit.py --help
+$ python fxy_fit.py --help
 ```
 
 and you get:
 ```
-usage: fx_fit.py [-h]
+usage: fxy_fit.py [-h]
                  --trainds TRAIN_DATASET_FILENAME
                  --modelout MODEL_PATH
                  [--epochs EPOCHS] [--batch_size BATCH_SIZE]
@@ -88,7 +83,7 @@ usage: fx_fit.py [-h]
                  [--loss LOSS]
                  [--device DEVICE]
 
-fx_fit.py fits a one-variable real-valued function dataset using a configurable multilayer perceptron
+fxy_fit.py fits a two-variables real-valued function dataset using a configurable multilayer perceptron
 
 optional arguments:
   -h, --help                        show this help message and exit
@@ -105,7 +100,7 @@ optional arguments:
 
 Namely:
 - **-h or --help** shows the above usage
-- **--trainds** is the input training dataset in csv format: a pair of real numbers for each line respectively for x and y (no header at first line). In case you haven't a such real world true dataset, for your experiments you can generate it synthetically using **fx_gen.py**. This argument is mandatory.
+- **--trainds** is the input training dataset in csv format: a triple of real numbers for each line respectively for x, y and z (no header at first line). In case you haven't a such real world true dataset, for your experiments you can generate it synthetically using **fxy_gen.py**. This argument is mandatory.
 - **--modelout** is a non-existing file where the program saves the trained model (in pth format). This argument is mandatory.
 - **--epochs** is the number of epochs of the training process. The default is **500**
 - **--batch_size** is the size of the batch used during training. The default is **50**
@@ -169,98 +164,92 @@ Namely:
   The default is **MSELoss()**.
   - **--device** is the target CUDA device where to perform math computations; default is **cpu**; to use default GPU pass **cuda**; please see [PyTorch CUDA semantic reference](https://pytorch.org/docs/stable/notes/cuda.html) for details.
 
-### Examples of fx_fix.py usage
+### Examples of fxy_fix.py usage
 ```bash
-$ python fx_fit.py \
-  --trainds mytrainds.csv \
-  --modelout mymodel.pth \
-  --hlayers 200 200 \
-  --hactivation 'ReLU()' 'ReLU()' \
-  --epochs 500 --batch_size 100
-
-$ python fx_fit.py \
-  --trainds mytrainds.csv \
-  --modelout mymodel.pth \
+$ python fxy_fit.py 
+  --trainds mytrain.csv \
+  --modelout mymodels \
   --hlayers 120 160 \
-  --hactivations 'Tanh()' 'ReLU()' \
-  --epochs 100 \
+  --hactivations tanh relu \
+  --epochs 15 \
   --batch_size 50 \
-  --optimizer 'Adam(lr=0.05, eps=1e-07)' \
-  --loss 'MSELoss()'
+  --optimizer 'Adam(learning_rate=0.05, epsilon=1e-07)' \
+  --loss 'MeanSquaredError()'
 
-$ python fx_fit.py \
-  --trainds mytrainds.csv
-  --modelout mymodel.pth \
-  --hlayers 200 300 200 \
-  --hactivation 'Sigmoid()' 'Sigmoid()' 'Sigmoid()' \
-  --epochs 1000 \
-  --batch_size 200 \
-  --optimizer 'Adamax(lr=0.02)'
+$ python fxy_fit.py \
+  --trainds mytrain.csv \
+  --modelout mymodels \
+  --hlayers 100 100 \
+  --hactivations relu relu \
+  --epochs 10 \
+  --batch_size 50 \
+  --optimizer 'SGD(decay=1e-6, momentum=0.9, nesterov=True)' \
+  --loss 'MeanSquaredError()'
 
-$ python fx_fit.py \
-  --trainds mytrainds.csv
-  --modelout mymodel.pth \
+$ python fxy_fit.py \
+  --trainds mytrain.csv \
+  --modelout mymodels \
   --hlayers 200 300 200 \
-  --hactivation 'Sigmoid()' 'Sigmoid()' 'Sigmoid()' \
-  --epochs 1000 \
-  --batch_size 200 \
-  --optimizer 'Adamax(lr=0.02)' \
+  --hactivations tanh tanh tanh \
+  --epochs 20 \
+  --batch_size 100 \
+  --optimizer 'Adamax(lr=0.01)' \
+  --loss 'MeanSquaredError()' \
   --device cuda
 ```
 
 
-## fx_predict.py<a name="fx_predict"/>
-To get the usage of [fx_predict.py](./fx_predict.py) please run
+## fxy_predict.py<a name="fxy_predict"/>
+To get the usage of [fxy_predict.py](./fxy_predict.py) please run
 ```bash
-$ python fx_predict.py --help
+$ python fxy_predict.py --help
 ```
 
 and you get:
 ```
-usage: fx_predict.py [-h]
+usage: fxy_predict.py [-h]
                      --model MODEL_PATH
                      --ds TEST_DATASET_FILENAME
                      --predictionout PREDICTION_DATA_FILENAME
                      [--device DEVICE]
 
-fx_predict.py makes prediction of the values of a one-variable real-valued function modeled with a pretrained multilayer perceptron
+fxy_predict.py makes prediction of the values of a two-variables real-valued function modeled with a pretrained multilayer perceptron
 
 optional arguments:
   -h, --help                               show this help message and exit
   --model MODEL_PATH                       model file
   --ds DATASET_FILENAME                    input dataset file (csv format); only x-values are used
-  --predictionout PREDICTION_DATA_FILENAME prediction data file (csv format)
-  --device DEVICE                          target device
+  --predictionout PREDICTION_DATA_FILENAME  prediction data file (csv format)
+  --device DEVICE                         target device
 ```
 
 Namely:
 - **-h or --help** shows the above usage
-- **--model** is the pth file of a model generated by **fx_fit.py** (see **--modelout** command line parameter of **fx_fit.py**). This argument is mandatory.
-- **--ds** is the input dataset in csv format (no header at first line): program uses only the x values (first column). In case you haven't a such real world true dataset, for your experiments you can generate it synthetically using **fx_gen.py**. This argument is mandatory.
+- **--model** is the pth file of a model generated by **fxy_fit.py** (see **--modelout** command line parameter of **fxy_fit.py**). This argument is mandatory.
+- **--ds** is the input dataset in csv format (no header at first line): program uses only the x values (first column). In case you haven't a such real world true dataset, for your experiments you can generate it synthetically using **fxy_gen.py**. This argument is mandatory.
 - **--predictionout** is the file name of prediction values. The content of this file is csv (no header at first line) and each line contains a couple of real numbers: the x value comes from input dataset and the prediction is the value of f(x) computed by multilayer perceptron model on x value; this argument is mandatory.
 - **--device** is the target CUDA device where to perform math computations; default is **cpu**; to use default GPU pass **cuda**; please see [PyTorch CUDA semantic reference](https://pytorch.org/docs/stable/notes/cuda.html) for details.
 
-### Example of fx_predict.py usage
+### Example of fxy_predict.py usage
 ```bash
-$ python fx_predict.py --model mymodel.pth --ds mytestds.csv --predictionout myprediction.csv
+$ python fxy_predict.py --model mymodel.pth --ds mytestds.csv --predictionout myprediction.csv
 ```
 
 
-## fx_plot.py<a name="fx_plot"/>
-To get the usage of [fx_plot.py](./fx_plot.py) please run
+## fxy_plot.py<a name="fxy_plot"/>
+To get the usage of [fxy_plot.py](./fxy_plot.py) please run
 ```bash
-$ python fx_plot.py --help
+$ python fxy_plot.py --help
 ```
 
 and you get:
 ```
-usage: fx_plot.py [-h]
+usage: fxy_plot.py [-h]
                   --ds DATASET_FILENAME
                   --prediction PREDICTION_DATA_FILENAME
                   [--savefig SAVE_FIGURE_FILENAME]
 
-fx_plot.py shows two overlapped x/y scatter graphs: the blue one is the dataset,
-the red one is the prediction one
+fxy_plot.py shows two non overlapped x/y/z scatter graphs: the blue one is the dataset, the red one is the prediction one
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -271,13 +260,13 @@ optional arguments:
 
 Namely:
 - **-h or --help** shows the above usage
-- **--ds** is an input dataset in csv format (no header at first line). Usually this parameter is the test dataset file passed to **fx_predict.py**, but you could pass the training dataset passed to **fx_fit.py**. This argument is mandatory.
-- **--prediction** is the file name of prediction values generated by **fx_predict.py** (see **--predictionout** command line parameter of **fx_predict.py**). This argument is mandatory.
-- **--savefig** if this argument is missing, the chart is shown on screen, otherwise this argument is the png output filename where **fx_plot.py** saves the chart.
+- **--ds** is an input dataset in csv format (no header at first line). Usually this parameter is the test dataset file passed to **fxy_predict.py**, but you could pass the training dataset passed to **fxy_fit.py**. This argument is mandatory.
+- **--prediction** is the file name of prediction values generated by **fxy_predict.py** (see **--predictionout** command line parameter of **fyx_predict.py**). This argument is mandatory.
+- **--savefig** if this argument is missing, the chart is shown on screen, otherwise this argument is the png output filename where **fxy_plot.py** saves the chart.
 
-### Examples of fx_plot.py usage
+### Examples of fxy_plot.py usage
 ```bash
-$ python fx_plot.py --ds mytestds.csv --prediction myprediction.csv
+$ python fxy_plot.py --ds mytestds.csv --prediction myprediction.csv
 
-$ python fx_plot.py --ds mytrainds.csv --prediction myprediction.csv --savefig mychart.png
+$ python fxy_plot.py --ds mytrainds.csv --prediction myprediction.csv --savefig mychart.png
 ```
