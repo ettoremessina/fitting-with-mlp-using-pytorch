@@ -2,7 +2,7 @@
 This project implements the fitting of a continuous and limited real-valued function defined in a closed interval of the reals.
 This one-variable real-valued function fitting is implemented using a configurable multilayer perceptron neural network written using PyTorch 1.2.0; it requires also NumPy and MatPlotLib libraries.<br/>
 
-Please visit [here](https://computationalmindset.com/en/posts/neural-networks/one-variable-function-fitting-with-pytorch.html) for concepts about this project.
+Please visit [here](https://computationalmindset.com/en/neural-networks/one-variable-real-function-fitting-with-pytorch.html) for concepts about this project.
 
 It contains four python programs:
  - **fx_gen.py** generates a synthetic dataset file invoking a one-variable real-valued function on an real interval.

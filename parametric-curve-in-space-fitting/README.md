@@ -2,7 +2,7 @@
 This project implements the fitting of a continuous and limited real-valued parametric curve in space where parameter belongs to a closed interval of the reals.
 The curve fitting is implemented using a configurable multilayer perceptron neural network written using PyTorch 1.2.0; it requires also NumPy and MatPlotLib libraries.<br />
 
-Please visit [here](https://computationalmindset.com/en/posts/neural-networks/parametric-curve-in-space-fitting-with-pytorch.html) for concepts about this project.
+Please visit [here](https://computationalmindset.com/en/neural-networks/parametric-curve-in-space-fitting-with-pytorch.html) for concepts about this project.
 
 It contains four python programs:
 - **pmc3t_gen.py** generates a synthetic dataset file invoking a triple of one-variable real functions defined on an real interval: first one for x=x(t) coordinate, second one for y=y(t) coordinate and third one for z=z(t) coordinate.
